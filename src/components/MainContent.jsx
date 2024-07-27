@@ -19,7 +19,7 @@ const MainContent = () => {
     return (
         <main className="rounded-[25px] border-[1px]
         border-slate-700 h-screen w-2/3
-        p-5
+        p-5 overflow-auto
         ">
             {content}
 

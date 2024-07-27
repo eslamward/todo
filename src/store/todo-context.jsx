@@ -35,7 +35,8 @@ const TodoContext = ({ children }) => {
             const id = Math.random();
             const newTodo = {
                 ...todo,
-                todoId: id
+                todoId: id,
+                steps: []
             };
             return {
                 ...prevState,
@@ -44,6 +45,7 @@ const TodoContext = ({ children }) => {
             };
         });
     };
+
     const handelcancelTodo = () => {
         setTodosState(prevState => {
             return {
@@ -52,12 +54,55 @@ const TodoContext = ({ children }) => {
             };
         });
     }
+    const handelSelectTodo = (id) => {
+        setTodosState(prevState => {
+            return {
+                ...prevState,
+                todoId: id
+            }
+        })
+    }
+    const handelAddStep = (step) => {
+
+        setTodosState(prevState => {
+            let newTodos = [...prevState.todos]
+            const todo = newTodos.find(todo => todo.todoId === prevState.todoId)
+            const updatedTodo = { ...todo, steps: [...todo.steps, step] }
+            newTodos = newTodos.filter(todo => todo.todoId !== prevState.todoId)
+
+            return {
+                ...prevState,
+                todos: [...newTodos, updatedTodo]
+            }
+        })
+    }
+
+    const handelDeleteStep = (stepId) => {
+
+        setTodosState(prevState => {
+            let newTodos = [...prevState.todos]
+            const todo = newTodos.find(todo => todo.todoId === prevState.todoId)
+            const newSteps = todo.steps.filter(step => step.stepId !== stepId)
+            const updatedTodo = { ...todo, steps: newSteps }
+            newTodos = newTodos.filter(todo => todo.todoId !== prevState.todoId)
+
+            return {
+                ...prevState,
+                todos: [...newTodos, updatedTodo]
+            }
+        })
+    }
+
+
     const todoCtxState = {
         todoId: todosState.todoId,
         todos: todosState.todos,
         startAddTodo: handelStartAddTodo,
         addTodo: handelAddTodo,
         cancelTodo: handelcancelTodo,
+        selectTodo: handelSelectTodo,
+        addStep: handelAddStep,
+        deleteStep: handelDeleteStep
     }
 
 

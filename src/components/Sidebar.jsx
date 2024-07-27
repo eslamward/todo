@@ -4,7 +4,7 @@ import { TodoContextState } from "../store/todo-context"
 
 const Sidebar = () => {
 
-    const { startAddTodo, todos } = useContext(TodoContextState)
+    const { startAddTodo, todos, selectTodo } = useContext(TodoContextState)
 
     return (
         <aside className="
@@ -24,7 +24,7 @@ const Sidebar = () => {
             <ul className=" flex flex-col gap-3 py-5 text-gray-400 ">
 
                 {todos.map(todo => (
-                    <li key={todo.todoId} className="hover:text-white cursor-pointer ">
+                    <li onClick={() => selectTodo(todo.todoId)} key={todo.todoId} className="hover:text-white cursor-pointer ">
                         - {todo.title}
                     </li>
                 ))}
