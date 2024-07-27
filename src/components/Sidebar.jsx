@@ -1,6 +1,10 @@
+import { useContext } from "react"
+import { TodoContextState } from "../store/todo-context"
 
 
 const Sidebar = () => {
+
+    const { startAddTodo, todos } = useContext(TodoContextState)
 
     return (
         <aside className="
@@ -13,17 +17,17 @@ const Sidebar = () => {
                 font-bold text-3xl mx-auto">
                 TODO APP
             </h2>
-            <button className="bg-slate-600 hover:bg-slate-500 px-5 py-2 mt-3
+            <button onClick={startAddTodo} className="bg-slate-600 hover:bg-slate-500 px-5 py-2 mt-3
             rounded-md w-fit font-medium mx-auto">
                 Add Todo +
             </button>
             <ul className=" flex flex-col gap-3 py-5 text-gray-400 ">
-                <li className="hover:text-white cursor-pointer  ">
-                    - Todo One
-                </li>
-                <li className="hover:text-white cursor-pointer ">
-                    - Todo One
-                </li>
+
+                {todos.map(todo => (
+                    <li key={todo.todoId} className="hover:text-white cursor-pointer ">
+                        - {todo.title}
+                    </li>
+                ))}
             </ul>
 
 
